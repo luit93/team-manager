@@ -32,6 +32,7 @@ function App() {
   const emailRef = useRef();
   const phoneRef = useRef();
 
+  //function to check for unique first name
   const uniqueFName = (name) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].firstName === name) {
@@ -46,20 +47,35 @@ function App() {
     const mail = emailRef.current.value;
     const num = phoneRef.current.value;
     // console.log(fName, lName, mail, num);
-    const validFName = /[a-zA-Z]/.test(fName) && fName.length < 256;
-    const validLName = /[a-zA-Z]/.test(lName) && lName.length < 256;
+    const validFName = /[a-zA-Z]/.test(fName) && fName.length < 251;
+    const validLName = /[a-zA-Z]/.test(lName) && lName.length < 251;
     const validEmail =
-      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mail) && mail.length < 256;
-    const validNum = /[0-9]/.test(num) && num.length === 10;
-    console.log(validFName, validLName, validEmail, validNum);
+      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mail) && mail.length < 251;
+    const validNum =
+      /[0-9]/.test(num) && (num.length >= 10 || num.length === 0);
+    // console.log(validFName, validLName, validEmail, validNum);
     const isFNameUnique = uniqueFName(fName);
     // console.log("sssss", isFNameUnique);
+    {
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{fName}</strong> already exists.
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>;
+    }
     if (
       //regular expressions for input validation
+
       validFName &&
       validLName &&
       validEmail &&
-      isFNameUnique
+      validNum
     ) {
       setData([
         ...data,
