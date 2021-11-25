@@ -9,18 +9,21 @@ function App() {
       lastName: "Doe",
       email: "jdoe@joker.com",
       phone: "9999999999",
+      id: "John" + "jdoe@joker.com",
     },
     {
-      firstName: "Dvid",
+      firstName: "David",
       lastName: "Sampleton",
       email: "d.sampleton@dream.com",
       phone: "9999999992",
+      id: "David" + "d.sampleton@dream.com",
     },
     {
       firstName: "Jane",
       lastName: "White",
       email: "jwhite@gmail.com",
       phone: "9999999991",
+      id: "Jane" + "jwhite@gmail.com",
     },
   ];
   const [data, setData] = useState(teamList);
@@ -46,29 +49,18 @@ function App() {
     const lName = lNameRef.current.value;
     const mail = emailRef.current.value;
     const num = phoneRef.current.value;
-    // console.log(fName, lName, mail, num);
+    const id = fName + mail; //unique id based on first name & email used for deletion
+    // console.log(fName, lName, mail, num, id);
     const validFName = /[a-zA-Z]/.test(fName) && fName.length < 251;
     const validLName = /[a-zA-Z]/.test(lName) && lName.length < 251;
     const validEmail =
       /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mail) && mail.length < 251;
-    const validNum =
-      /[0-9]/.test(num) && (num.length >= 10 || num.length === 0);
+
+    const validNum = (/[0-9]/.test(num) && num.length >= 10) || num === "";
     // console.log(validFName, validLName, validEmail, validNum);
     const isFNameUnique = uniqueFName(fName);
     // console.log("sssss", isFNameUnique);
-    {
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{fName}</strong> already exists.
-        <button
-          type="button"
-          class="close"
-          data-dismiss="alert"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>;
-    }
+
     if (
       //regular expressions for input validation
 
@@ -77,6 +69,25 @@ function App() {
       validEmail &&
       validNum
     ) {
+      if (!isFNameUnique) {
+        if (
+          window.confirm(
+            `${fName} already exists, are you sure you want to proceed ?`
+          )
+        ) {
+          setData([
+            ...data,
+            {
+              firstName: fName,
+              lastName: lName,
+              email: mail,
+              phone: num,
+              id,
+            },
+          ]);
+          return;
+        }
+      }
       setData([
         ...data,
         {
@@ -84,14 +95,15 @@ function App() {
           lastName: lName,
           email: mail,
           phone: num,
+          id,
         },
       ]);
     }
   };
 
-  const handleOnDelete = (name) => {
+  const handleOnDelete = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      const newList = data.filter((item) => item.firstName !== name);
+      const newList = data.filter((item) => item.id !== id);
 
       setData(newList);
     }
@@ -177,7 +189,7 @@ function App() {
                 <td>
                   <Button
                     variant="danger"
-                    onClick={() => handleOnDelete(item.email)}
+                    onClick={() => handleOnDelete(item.id)}
                   >
                     Delete
                   </Button>
