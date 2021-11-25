@@ -5,21 +5,21 @@ import React, { useState, useRef } from "react";
 function App() {
   const teamList = [
     {
-      firstName: "Mark",
-      lastName: "Hamill",
-      email: "luke@joker.com",
+      firstName: "John",
+      lastName: "Doe",
+      email: "jdoe@joker.com",
       phone: "9999999999",
     },
     {
-      firstName: "Neil",
-      lastName: "Gaiman",
-      email: "tiamat@dream.com",
-      phone: "9999999991",
+      firstName: "Dvid",
+      lastName: "Sampleton",
+      email: "d.sampleton@dream.com",
+      phone: "9999999992",
     },
     {
-      firstName: "Neqqil",
-      lastName: "Gaimasn",
-      email: "tiaqmat@dream.com",
+      firstName: "Jane",
+      lastName: "White",
+      email: "jwhite@gmail.com",
       phone: "9999999991",
     },
   ];
@@ -33,9 +33,6 @@ function App() {
   const phoneRef = useRef();
 
   const uniqueFName = (name) => {
-    // alert("jdjhk");
-    // const fName = fNameRef.current.value;
-    // console.log(fName);
     for (let i = 0; i < data.length; i++) {
       if (data[i].firstName === name) {
         return false;
@@ -48,7 +45,7 @@ function App() {
     const lName = lNameRef.current.value;
     const mail = emailRef.current.value;
     const num = phoneRef.current.value;
-    console.log(fName, lName, mail, num);
+    // console.log(fName, lName, mail, num);
     const validFName = /[a-zA-Z]/.test(fName) && fName.length < 256;
     const validLName = /[a-zA-Z]/.test(lName) && lName.length < 256;
     const validEmail =
@@ -56,7 +53,7 @@ function App() {
     const validNum = /[0-9]/.test(num) && num.length === 10;
     console.log(validFName, validLName, validEmail, validNum);
     const isFNameUnique = uniqueFName(fName);
-    console.log("sssss", isFNameUnique);
+    // console.log("sssss", isFNameUnique);
     if (
       //regular expressions for input validation
       validFName &&
