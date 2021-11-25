@@ -27,7 +27,19 @@
 .App-link {
   color: #61dafb;
 }
-
+.table-header {
+  background-color: black;
+  color: white;
+}
+.yellow {
+  color: gold;
+}
+.title {
+  margin-right: 1000px;
+}
+.save-button {
+  margin-left: 1070px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
