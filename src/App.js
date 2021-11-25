@@ -32,6 +32,17 @@ function App() {
   const emailRef = useRef();
   const phoneRef = useRef();
 
+  const uniqueFName = (name) => {
+    // alert("jdjhk");
+    // const fName = fNameRef.current.value;
+    // console.log(fName);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].firstName === name) {
+        return false;
+      }
+    }
+    return true;
+  };
   const handleOnSave = () => {
     const fName = fNameRef.current.value;
     const lName = lNameRef.current.value;
@@ -44,12 +55,14 @@ function App() {
       /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mail) && mail.length < 256;
     const validNum = /[0-9]/.test(num) && num.length === 10;
     console.log(validFName, validLName, validEmail, validNum);
-
+    const isFNameUnique = uniqueFName(fName);
+    console.log("sssss", isFNameUnique);
     if (
       //regular expressions for input validation
       validFName &&
       validLName &&
-      validEmail
+      validEmail &&
+      isFNameUnique
     ) {
       setData([
         ...data,
@@ -63,9 +76,9 @@ function App() {
     }
   };
 
-  const handleOnDelete = (email) => {
+  const handleOnDelete = (name) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      const newList = data.filter((item) => item.email !== email);
+      const newList = data.filter((item) => item.firstName !== name);
 
       setData(newList);
     }
@@ -94,6 +107,7 @@ function App() {
                       name="fName"
                       type="text"
                       ref={fNameRef}
+                      onBlur={uniqueFName}
                       placeholder={item.firstName}
                       required="required"
                     />
