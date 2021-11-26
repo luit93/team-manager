@@ -85,8 +85,8 @@ function App() {
               id,
             },
           ]);
-          return;
         }
+        return;
       }
       setData([
         ...data,
